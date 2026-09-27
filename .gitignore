@@ -7,3 +7,4 @@ Runtime/Vulkan/
 Runtime/CPU/
 *.exe
 artifacts/
+bootstrapper/build/

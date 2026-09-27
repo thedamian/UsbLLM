@@ -11,9 +11,8 @@ public sealed class LocalCliInference
     public async Task<string> GenerateAsync(ModelDefinition model, IEnumerable<ChatMessage> messages,
         IEnumerable<LocalAttachment> attachments, CancellationToken cancellationToken)
     {
-        var portableRoot = GetPortableRoot();
-        var modelPath = Path.Combine(portableRoot, "Models", model.ModelFile);
-        var projectorPath = model.VisionProjectorFile is null ? null : Path.Combine(portableRoot, "Models", model.VisionProjectorFile);
+        var modelPath = ModelStorage.GetModelPath(model);
+        var projectorPath = ModelStorage.GetProjectorPath(model);
         var runtime = RuntimeLocator.Locate();
         if (runtime is null) return "The local runtime is not available in this build. No prompt was sent anywhere.";
         if (!File.Exists(modelPath)) return $"{model.DisplayName} is not on this USB drive yet. Choose a downloaded model instead.";
@@ -61,14 +60,6 @@ public sealed class LocalCliInference
         if (process.ExitCode != 0)
             return $"The local {runtime.Backend} runtime could not complete this request (exit {process.ExitCode}). {Shorten(error)}";
         return string.IsNullOrWhiteSpace(answer) ? "The local model returned no text." : answer;
-    }
-
-    private static string GetPortableRoot()
-    {
-        var executableDirectory = Path.GetDirectoryName(Environment.ProcessPath ?? string.Empty);
-        return executableDirectory is not null && Directory.Exists(Path.Combine(executableDirectory, "Models"))
-            ? executableDirectory
-            : AppContext.BaseDirectory;
     }
 
     private static string Shorten(string text) => Regex.Replace(text, "\\s+", " ").Trim() is { Length: > 300 } value ? value[..300] : Regex.Replace(text, "\\s+", " ").Trim();

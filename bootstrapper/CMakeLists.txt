@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.25)
+project(UsbLlmBootstrapper LANGUAGES CXX)
+add_executable(UsbLlmBootstrap WIN32 main.cpp)
+set_property(TARGET UsbLlmBootstrap PROPERTY CXX_STANDARD 20)
+target_compile_definitions(UsbLlmBootstrap PRIVATE UNICODE _UNICODE)
+if(MSVC)
+  target_compile_options(UsbLlmBootstrap PRIVATE /W4 /MT)
+endif()

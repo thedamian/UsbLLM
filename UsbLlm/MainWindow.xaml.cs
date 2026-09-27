@@ -54,6 +54,33 @@ public partial class MainWindow : Window
             Title = $"Usb LLM — {model.DisplayName}";
     }
 
+    private async void DownloadSelected_Click(object sender, RoutedEventArgs e)
+    {
+        if (ModelSelector.SelectedItem is not ModelDefinition model) return;
+        if (model.Source.StartsWith("google/gemma", StringComparison.OrdinalIgnoreCase))
+        {
+            var result = MessageBox.Show(this,
+                "Gemma is subject to the applicable Google Gemma license terms. By continuing, you confirm that you have reviewed and accept those terms for this local download.",
+                "Gemma license acknowledgement", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (result != MessageBoxResult.Yes) return;
+        }
+        try
+        {
+            var progress = new Progress<ModelDownloadProgress>(item =>
+            {
+                const double bytesPerGiB = 1024d * 1024 * 1024;
+                var total = item.TotalBytes is { } bytes && bytes > 0 ? $" / {bytes / bytesPerGiB:0.0} GB" : string.Empty;
+                DownloadStatus.Text = $"Downloading {model.DisplayName}: {item.FileName} ({item.DownloadedBytes / bytesPerGiB:0.0} GB{total})";
+            });
+            await new ModelDownloadService().DownloadAsync(model, progress, CancellationToken.None);
+            DownloadStatus.Text = $"{model.DisplayName} is ready for private offline use.";
+        }
+        catch (Exception exception)
+        {
+            DownloadStatus.Text = $"Model download stopped: {exception.Message}";
+        }
+    }
+
     private void Attach_Click(object sender, RoutedEventArgs e)
     {
         if (ActiveSession is null) return;

@@ -40,10 +40,12 @@
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal">
           <ComboBox x:Name="ModelSelector" Width="300" DisplayMemberPath="DisplayLabel" SelectionChanged="ModelSelector_SelectionChanged" />
-          <Button Content="Export chat" Click="ExportCurrent_Click" Margin="10,0,0,0" Padding="10,6" />
+          <Button Content="Download model" Click="DownloadSelected_Click" Margin="10,0,0,0" Padding="10,6" />
+          <Button Content="Export chat" Click="ExportCurrent_Click" Margin="8,0,0,0" Padding="10,6" />
           <Button Content="Export all" Click="ExportAll_Click" Margin="8,0,0,0" Padding="10,6" />
         </StackPanel>
       </Grid>
+      <TextBlock x:Name="DownloadStatus" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,48,0,-4" Foreground="{StaticResource Muted}" />
 
       <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
         <ItemsControl x:Name="MessagesList" ItemsSource="{Binding ActiveMessages}">

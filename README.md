@@ -25,6 +25,19 @@ user profile. A bundled inference native library may extract into a hidden,
 temporary runtime directory for Windows loader compatibility; its contents are
 removed during normal shutdown.
 
+## Editions
+
+- **Usb LLM Download** is the GitHub Release edition. It includes the complete
+  private runtime and an in-app downloader; no Hugging Face CLI or account is
+  required for public model files. Models are stored under the user's local
+  application-data directory. Gemma requires an explicit in-app licence
+  acknowledgement before download.
+- **Usb LLM Offline** is a single, 50+ GB EXE for USB or external hosting. On
+  first launch it explains that it is extracting included models and runtimes to
+  a hidden `.usbllm-cache` folder beside the EXE for speed. The user may delete
+  that folder whenever they want; the EXE recreates it offline on a later run.
+  GitHub cannot host this edition because its release-asset limit is 2 GiB.
+
 ## Architecture
 
 1. **WPF shell**: fullscreen chat UI, an in-memory session list, attachments,
