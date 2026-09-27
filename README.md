@@ -6,6 +6,11 @@ Usb LLM is a portable, Windows-first local chat application.  It starts from a
 USB drive, loads models that live beside the executable, and keeps chat state
 only in memory unless the person using it deliberately exports a conversation.
 
+## Download your version
+ We have TWO versions
+ - [Small executable where you download the models](https://github.com/thedamian/usbLLM/releases)
+ - Large Executable version which includes models  (link coming soon)
+
 ## Portable layout
 
 The release drive contains one application file and a model folder:
