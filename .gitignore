@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+Models/
+Runtime/CUDA/
+Runtime/Vulkan/
+Runtime/CPU/
+*.exe
+artifacts/

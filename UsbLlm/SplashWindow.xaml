@@ -1,0 +1,23 @@
+<Window x:Class="UsbLlm.SplashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="720" Height="420" WindowStyle="None" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" Background="#08111F" ShowInTaskbar="False">
+  <Border BorderBrush="#1F9D8B" BorderThickness="1" CornerRadius="18" Padding="44">
+    <Grid>
+      <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <StackPanel VerticalAlignment="Center">
+        <Border Width="74" Height="74" CornerRadius="18" Background="#0F766E" HorizontalAlignment="Left" Margin="0,0,0,22">
+          <TextBlock Text="U" FontSize="38" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+        <TextBlock Text="Usb LLM" FontSize="46" FontWeight="SemiBold" Foreground="#F8FAFC" />
+        <TextBlock Text="Real Privacy with no Internet and no logging but full power"
+                   FontSize="17" Foreground="#99F6E4" Margin="0,12,0,0" TextWrapping="Wrap" />
+      </StackPanel>
+      <StackPanel Grid.Row="1">
+        <ProgressBar Height="4" IsIndeterminate="True" Foreground="#5EEAD4" Background="#1E293B" />
+        <TextBlock Text="Preparing a private local workspace…" Foreground="#94A3B8" Margin="0,12,0,0" />
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>
