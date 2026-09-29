@@ -64,6 +64,7 @@ public partial class MainWindow : Window
                 "Gemma license acknowledgement", MessageBoxButton.YesNo, MessageBoxImage.Information);
             if (result != MessageBoxResult.Yes) return;
         }
+        DownloadButton.IsEnabled = false;
         try
         {
             var progress = new Progress<ModelDownloadProgress>(item =>
@@ -78,6 +79,10 @@ public partial class MainWindow : Window
         catch (Exception exception)
         {
             DownloadStatus.Text = $"Model download stopped: {exception.Message}";
+        }
+        finally
+        {
+            DownloadButton.IsEnabled = true;
         }
     }
 

@@ -47,17 +47,19 @@ public sealed class ModelDownloadService
         using var response = await Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         response.EnsureSuccessStatusCode();
         await using var source = await response.Content.ReadAsStreamAsync(cancellationToken);
-        await using var target = new FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: true);
-        var buffer = new byte[1024 * 1024];
-        long downloaded = 0;
-        int read;
-        while ((read = await source.ReadAsync(buffer, cancellationToken)) > 0)
+        await using (var target = new FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: true))
         {
-            await target.WriteAsync(buffer.AsMemory(0, read), cancellationToken);
-            downloaded += read;
-            progress?.Report(new ModelDownloadProgress(fileName, downloaded, response.Content.Headers.ContentLength));
+            var buffer = new byte[1024 * 1024];
+            long downloaded = 0;
+            int read;
+            while ((read = await source.ReadAsync(buffer, cancellationToken)) > 0)
+            {
+                await target.WriteAsync(buffer.AsMemory(0, read), cancellationToken);
+                downloaded += read;
+                progress?.Report(new ModelDownloadProgress(fileName, downloaded, response.Content.Headers.ContentLength));
+            }
+            await target.FlushAsync(cancellationToken);
         }
-        await target.FlushAsync(cancellationToken);
         File.Move(temporary, destination, overwrite: true);
     }
 }

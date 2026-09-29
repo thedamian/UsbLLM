@@ -40,7 +40,7 @@
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal">
           <ComboBox x:Name="ModelSelector" Width="300" DisplayMemberPath="DisplayLabel" SelectionChanged="ModelSelector_SelectionChanged" />
-          <Button Content="Download model" Click="DownloadSelected_Click" Margin="10,0,0,0" Padding="10,6" />
+          <Button x:Name="DownloadButton" Content="Download model" Click="DownloadSelected_Click" Margin="10,0,0,0" Padding="10,6" />
           <Button Content="Export chat" Click="ExportCurrent_Click" Margin="8,0,0,0" Padding="10,6" />
           <Button Content="Export all" Click="ExportAll_Click" Margin="8,0,0,0" Padding="10,6" />
         </StackPanel>
@@ -61,7 +61,7 @@
                         <TextBlock Text="CODE" Foreground="#94A3B8" FontSize="11" FontWeight="Bold" />
                         <Button Content="Copy" Tag="{Binding Code}" Click="CopyCode_Click" DockPanel.Dock="Right" Padding="7,2" />
                       </DockPanel>
-                      <TextBox Text="{Binding Code}" IsReadOnly="True" FontFamily="Cascadia Code" FontSize="13" Background="Transparent"
+                      <TextBox Text="{Binding Code, Mode=OneWay}" IsReadOnly="True" FontFamily="Cascadia Code" FontSize="13" Background="Transparent"
                                Foreground="#E2E8F0" BorderThickness="0" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" />
                     </StackPanel>
                   </Border>
